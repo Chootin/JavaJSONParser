@@ -10,25 +10,14 @@ import static com.chootin.collectionParser.StringArray.*;
 
 public class JSON {
 
-    /*
     //Testing main
-    public static void main(String[] args) {
-        String string = "{\"property\": \"value\", \"property2\": {subjsonproperty: \"value\", mmmm: \n" +
-                "3}, property3: [[value, value2], {fruit: \n" +
-                "banana, fruit2: bigbanana}]}";
+    /*public static void main(String[] args) {
+        String string = "{\"testChallenge\":[{\"id\":1,\"engname\":\"a, i, u, e, o\",\"japname\":\"あ、　い、　う、　え、　お\",\"path\":\"Kana\",\"gametype\":\"button\",\"numans\":\"4\",\"repeat\":1,\"numrepeats\":20,\"quetype\":\"Kana\",\"anstype\":\"English\",\"fonts\":\"1\",\"selectortype\":\"Kana\",\"prereq\":null}]}";
         JSON json = new JSON(string);
-        System.out.println(json.get("property").equals("value"));
-        JSON subJSON = json.getJSON("property2");
-        System.out.println(subJSON.get("subjsonproperty").equals("value"));
-        System.out.println(subJSON.getInt("mmmm") == 3);
-        System.out.println(json.toString().equals(string));
-        String[] property3 = json.getStringArray("property3");
-        System.out.println(property3[0].equals("[value, value2]"));
-        System.out.println(toArray(property3[0])[1].equals("value2"));
-        System.out.println(property3[1]);
-        System.out.println(new JSON(property3[1]).get("fruit2").equals("bigbanana"));
-    }
-    */
+        System.out.println(json.getStringArray("testChallenge")[0]);
+        System.out.println(new JSON(json.getStringArray("testChallenge")[0]).get("engname"));
+
+    }*/
 
     private HashMap<String, String> data = new HashMap<>();
     private String jsonString;
@@ -48,7 +37,7 @@ public class JSON {
                 depth++;
                 if (depth == 1) {
                     continue;
-                } else {
+                } else if (depth > 1) {
                     subjson = true;
                 }
             } else if (!quotesOpen && c == '}') {
@@ -72,7 +61,7 @@ public class JSON {
                         arrayOpen = false;
                     }
                 }
-                if (!arrayOpen) {
+                if (!arrayOpen && !quotesOpen) {
                     if (!quotesOpen && c == ':') {
                         temp = builder.toString();
                         builder.delete(0, builder.length());
@@ -88,10 +77,6 @@ public class JSON {
             }
             builder.append(c);
         }
-        for (String key : data.keySet()) {
-            System.out.println("Processed output - " + key + ": " + data.get(key));
-        }
-
     }
 
     public String get(String key) {

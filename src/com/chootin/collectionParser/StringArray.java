@@ -19,7 +19,6 @@ public class StringArray {
         for (char c : temp) {
             if (c == '"') {
                 quotesOpen = !quotesOpen;
-                continue;
             } else if (!quotesOpen && !subArray && c == '{') {
                 jsonDepth++;
                 jsonOpen = true;
