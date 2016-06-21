@@ -99,6 +99,10 @@ public class JSON {
         return toArray(data.get(key));
     }
 
+    public String[] getKeys() {
+        return data.keySet().toArray(new String[0]);
+    }
+
     @Override
     public String toString() {
         return jsonString;
